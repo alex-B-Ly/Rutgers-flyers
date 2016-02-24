@@ -1,0 +1,19 @@
+{
+  "name": "rutgersflyers",
+  "version": "1.0.0",
+  "description": "An app used to check out places around Rutgers University",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex-B-Ly/Rutgers-flyers.git"
+  },
+  "author": "Alex, Matt, Raj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alex-B-Ly/Rutgers-flyers/issues"
+  },
+  "homepage": "https://github.com/alex-B-Ly/Rutgers-flyers#readme"
+}
