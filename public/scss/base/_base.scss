@@ -1,0 +1,23 @@
+/* BASE */
+body{
+  background: $primary-color;
+  color: $text-color;
+}
+
+h1{
+  font-size: 3.5em;
+}
+
+h5{
+  position: relative;
+  top: 50%;
+  transform: translateY(14%);
+}
+
+a,
+a:link,
+a:hover,
+a:visited,
+a:active{
+  text-decoration: none;
+}
