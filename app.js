@@ -1,12 +1,8 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
-// var bcrypt = require('bcryptjs');
-// var session = require('express-session');
-var bodyParser = require('body-parser');
-// var Sequelize = require('sequelize');
-
 var app = express();
-var PORT = process.env.NODE_ENV || 3000;
+var PORT = process.env.PORT || 3000;
+
 
 // app.use(session({
 //   secret: 'Top Secret',
@@ -21,9 +17,6 @@ var PORT = process.env.NODE_ENV || 3000;
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
@@ -43,9 +36,10 @@ app.get('/registration', function(req, res) {
   res.render('registration');
 });
 
-// app.get('/places', function(req, res) {
-//   res.render('place');
-// });
+app.get('/places', function(req, res) {
+  res.render('places');
+});
+
 
 app.listen(PORT, function() {
   console.log("Listening on PORT %s", PORT);
