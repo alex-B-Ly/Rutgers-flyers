@@ -30,19 +30,19 @@ app.set('view engine', 'handlebars');
 app.use('/static', express.static('public'));
 
 app.get('/', function(req, res) {
-  res.render('home');
+  res.send('home');
 });
 
 app.get('/login', function(req, res) {
-  res.render('login');
+  res.send('login');
 });
 
 app.get('/registration', function(req, res) {
-  res.render('registration');
+  res.send('registration');
 });
 
 app.get('/places', function(req, res) {
-  res.render('place');
+  res.send('place');
 });
 
 app.listen(PORT, function() {
