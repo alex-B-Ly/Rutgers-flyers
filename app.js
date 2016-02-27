@@ -3,7 +3,7 @@ var exphbs = require('express-handlebars');
 var bcrypt = require('bcryptjs');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var Sequelize = require('sequelize');
+// var Sequelize = require('sequelize');
 
 var app = express();
 var PORT = process.env.NODE_ENV || 3000;
