@@ -12,11 +12,6 @@ body {
 h1 {
   font-size: 3.5em; }
 
-h5 {
-  position: relative;
-  top: 50%;
-  transform: translateY(50%); }
-
 a,
 a:link,
 a:hover,
@@ -25,6 +20,20 @@ a:active {
   text-decoration: none; }
 
 /* MODULES files */
+.button {
+  border-radius: 40px;
+  margin-right: 20px;
+  background: #086788;
+  font-size: 1.25em; }
+
+.button:hover {
+  background: #0b8bb8;
+  text-shadow: 0 0 5px #fff; }
+
 /* LAYOUT files */
+.top-bar,
+.top-bar ul {
+  background: #FF0000;
+  opacity: 0.4; }
 
 /*# sourceMappingURL=style.css.map */
