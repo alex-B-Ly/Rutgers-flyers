@@ -1,22 +1,22 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
-var bcrypt = require('bcryptjs');
-var session = require('express-session');
+// var bcrypt = require('bcryptjs');
+// var session = require('express-session');
 var bodyParser = require('body-parser');
 // var Sequelize = require('sequelize');
 
 var app = express();
 var PORT = process.env.NODE_ENV || 3000;
 
-app.use(session({
-  secret: 'Top Secret',
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    secure: false,
-    maxAge: (1000 * 60 * 60 * 4)
-  }
-}));
+// app.use(session({
+//   secret: 'Top Secret',
+//   resave: true,
+//   saveUninitialized: true,
+//   cookie: {
+//     secure: false,
+//     maxAge: (1000 * 60 * 60 * 4)
+//   }
+// }));
 
 // app.use(passport.initialize());
 // app.use(passport.session());
