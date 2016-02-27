@@ -18,9 +18,6 @@ var PORT = process.env.NODE_ENV || 3000;
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
