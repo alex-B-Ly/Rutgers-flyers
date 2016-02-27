@@ -1,5 +1,5 @@
 /*
-  Alex, Raj, Matt
+  Alex, Raj, Matt, Hannibal
   Main scss file
 */
 /* BASE files */
@@ -12,16 +12,17 @@ body {
 h1 {
   font-size: 3.5em; }
 
+h5 {
+  position: relative;
+  top: 50%;
+  transform: translateY(50%); }
+
 a,
 a:link,
 a:hover,
 a:visited,
 a:active {
   text-decoration: none; }
-
-.h-align {
-  
-}
 
 /* MODULES files */
 /* LAYOUT files */
