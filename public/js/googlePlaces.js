@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  alert('hello');
+  // alert('hello');
 
   var elem = new Foundation.Accordion('accordion');
 
