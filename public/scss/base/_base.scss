@@ -1,8 +1,5 @@
 /* BASE */
-body{
-  background: $primary-color;
-  color: $text-color;
-}
+
 
 h1{
   font-size: 3.5em;
@@ -13,6 +10,8 @@ h5{
   top: 50%;
   transform: translateY(14%);
 }
+
+
 
 a,
 a:link,
