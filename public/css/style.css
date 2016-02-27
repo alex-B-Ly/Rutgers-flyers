@@ -5,17 +5,13 @@
 /* BASE files */
 /* MIXINS */
 /* BASE */
-body {
-  background: #FF0000;
-  color: #FEFFF2; }
-
 h1 {
   font-size: 3.5em; }
 
 h5 {
   position: relative;
   top: 50%;
-  transform: translateY(50%); }
+  transform: translateY(14%); }
 
 a,
 a:link,
