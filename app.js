@@ -3,7 +3,7 @@ var exphbs = require('express-handlebars');
 
 
 var app = express();
-var PORT = process.env.NODE_ENV || 3000;
+var PORT = process.env.PORT || 3000;
 
 // app.use(session({
 //   secret: 'Top Secret',
