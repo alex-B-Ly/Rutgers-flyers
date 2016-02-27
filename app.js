@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var Sequelize = require('sequelize');
 
 var app = express();
-var PORT = 3000;
+var PORT = process.env.NODE_ENV || 3000;
 
 app.use(session({
   secret: 'Top Secret',
