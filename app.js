@@ -35,17 +35,17 @@ app.get('/', function(req, res) {
   res.render('home');
 });
 
-app.get('/login', function(req, res) {
-  res.render('/login');
-});
+// app.get('/login', function(req, res) {
+//   res.render('/login');
+// });
 
-app.get('/registration', function(req, res) {
-  res.render('/registration');
-});
+// app.get('/registration', function(req, res) {
+//   res.render('/registration');
+// });
 
-app.get('/places', function(req, res) {
-  res.render('place');
-});
+// app.get('/places', function(req, res) {
+//   res.render('place');
+// });
 
 app.listen(PORT, function() {
   console.log("Listening on PORT %s", PORT);
