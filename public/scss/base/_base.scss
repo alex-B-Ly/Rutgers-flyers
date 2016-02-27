@@ -1,4 +1,12 @@
 /* BASE */
+body{
+  background: $primary-color;
+  color: $text-color;
+}
+
+h1{
+  font-size: 3.5em;
+}
 
 a,
 a:link,
