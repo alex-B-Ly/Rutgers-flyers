@@ -1,6 +1,8 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 var bcrypt = require('bcryptjs');
+var session = require('express-session');
+var bodyParser = require('body-parser');
 var Sequelize = require('sequelize');
 
 var app = express();
@@ -20,11 +22,14 @@ app.use(session({
 // app.use(passport.session());
 
 app.use(bodyParser.urlencoded({
-  urlExtended: false
+  extended: false
 }));
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
+
+// MIDDLEWARE - Public
+app.use('/static', express.static('public'));
 
 app.get('/', function(req, res) {
   res.render('home');
