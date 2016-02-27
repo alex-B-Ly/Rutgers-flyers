@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
   $(document).foundation();
     // var googlePlacesURL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
     // var apiKey = 'AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg';
