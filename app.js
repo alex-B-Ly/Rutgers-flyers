@@ -36,11 +36,11 @@ app.get('/', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-  res.render('/login');
+  res.render('login');
 });
 
 app.get('/registration', function(req, res) {
-  res.render('/registration');
+  res.render('registration');
 });
 
 app.get('/places', function(req, res) {
