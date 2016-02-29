@@ -1,9 +1,8 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
-
-
 var app = express();
 var PORT = process.env.PORT || 3000;
+
 
 // app.use(session({
 //   secret: 'Top Secret',
@@ -40,6 +39,7 @@ app.get('/registration', function(req, res) {
 app.get('/places', function(req, res) {
   res.render('places');
 });
+
 
 app.listen(PORT, function() {
   console.log("Listening on PORT %s", PORT);

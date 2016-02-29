@@ -23,24 +23,10 @@ a:visited,
 a:active {
   text-decoration: none; }
 
-.thumbnail {
-  height: 80%;
-  width: 80%;
-}
-
-.title {
-  margin-bottom: 30px;
-}
-
-i {
-  margin-top: 14px
-}
-
-.open-now {
-  color: green;
-}
-
 /* MODULES files */
+#main_login {
+  display: none; }
+
 /* LAYOUT files */
 
 /*# sourceMappingURL=style.css.map */
