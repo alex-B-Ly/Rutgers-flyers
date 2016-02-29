@@ -35,18 +35,21 @@ $(document).ready(function() {
         var restaurantColumn = $('<div>').addClass('col-xs-4').append(restaurantRow);
 
 
-        // var placeURL = 'https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid='
-        // var placeId = data.results[0].place_id;
-        // var placeEndPoint = placeURL + placeId;
-        // $.getJSON(placeEndPoint, function(placeData) {
-        //     var streetNumber = data.results[0].addressComponents[0].short_name;
-        //     var streetName = data.results[0].addressComponents[1].short_name;
-        //     var city =  data.results[0].addressComponents[2].short_name;
-        //     var state = data.results[0].addressComponents[3].short_name;
-        //     var zipCode = data.results[0].addressComponents[4].short_name;
-        //     var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode; 
+        var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid='
+        var placeId = data.results[1].place_id;
+        var placeEndPoint = placeURL + placeId;
+        console.log(placeEndPoint);
 
-        // });
+
+        $.getJSON(placeEndPoint, function(placeData) {
+            var streetNumber = placeData.result.address_components[0].short_name;
+            var streetName = placeData.result.address_components[1].short_name;
+            var city =  placeData.result.address_components[2].short_name;
+            var state = placeData.result.address_components[3].short_name;
+            var zipCode = placeData.result.address_components[4].short_name;
+            var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode;
+        });
+
 
         //Append all columns to panel
         var contentRow = $('<div>').addClass('row content-row');
