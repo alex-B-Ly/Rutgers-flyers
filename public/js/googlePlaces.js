@@ -48,6 +48,8 @@ $(document).ready(function() {
                 var state = placeData.result.address_components[3].short_name;
                 var zipCode = placeData.result.address_components[4].short_name;
                 var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode;
+
+                restaurantRow.append(address);
                 return address;
             });
 
