@@ -49,7 +49,6 @@ $(document).ready(function() {
                 var zipCode = placeData.result.address_components[4].short_name;
                 var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode;
                 return address;
-                debugger;
             });
 
             return getAddress
