@@ -3,24 +3,46 @@
 <head>
   <title>Rutgers Flyers App</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/simplex/bootstrap.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
-<<<<<<< HEAD
-  <div class="row">
-    <div class="col-xs-12 text-center">
-      <h1>RUTGERS FLYERS</h1>
-      {{{body}}}
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#log-reg" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Rutgers Flyers</a>
+      </div>
+      <div class="collapse navbar-collapse" id="log-reg">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <button id="login-button" class="btn btn-block btn-primary">Login</button>
+          </li>
+          <li>
+            <button id="register-button" class="btn btn-block btn-primary">Register</button>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-=======
-  <div class="container">
-    
-      {{{body}}}
+  </nav>
 
+  <div class="container">      
+
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h1>RUTGERS FLYERS</h1>
+      </div>
+    </div>
+
+    {{{body}}}
   </div>
 
->>>>>>> a501e298809d4d37cfa71ca21436cd7d86d8113d
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
