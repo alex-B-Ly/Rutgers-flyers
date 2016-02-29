@@ -40,15 +40,24 @@ $(document).ready(function() {
         var placeEndPoint = placeURL + placeId;
         console.log(placeEndPoint);
 
+        function getAddress(endpoint) {
+            $.getJSON(endpoint, function (placeData) {
+                var streetNumber = placeData.result.address_components[0].short_name;
+                var streetName = placeData.result.address_components[1].short_name;
+                var city =  placeData.result.address_components[2].short_name;
+                var state = placeData.result.address_components[3].short_name;
+                var zipCode = placeData.result.address_components[4].short_name;
+                var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode;
+                return address;
+                debugger;
+            });
 
-        $.getJSON(placeEndPoint, function(placeData) {
-            var streetNumber = placeData.result.address_components[0].short_name;
-            var streetName = placeData.result.address_components[1].short_name;
-            var city =  placeData.result.address_components[2].short_name;
-            var state = placeData.result.address_components[3].short_name;
-            var zipCode = placeData.result.address_components[4].short_name;
-            var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode;
-        });
+            return getAddress
+        }
+
+        var returnedAddress = getAddress(placeEndPoint);
+        console.log(returnedAddress);
+
 
 
         //Append all columns to panel
