@@ -22,15 +22,25 @@
       <div class="collapse navbar-collapse" id="log-reg">
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <button id="login-button" class="btn btn-block btn-primary">Login</button>
+            <button id="login-button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#main-modal">Login</button>
           </li>
           <li>
-            <button id="register-button" class="btn btn-block btn-primary">Register</button>
+            <button id="register-button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#main-modal">Register</button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <div id="main-modal fade" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="container">      
 
@@ -47,6 +57,6 @@
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script type="text/javascript" src="../../static/js/googlePlaces.js"></script>
-
+  <script type="text/javascript" src="/static/js/functionality.js"></script>
 </body>
 </html>
