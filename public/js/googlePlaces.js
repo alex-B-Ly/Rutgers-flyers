@@ -13,6 +13,7 @@ $(document).ready(function() {
     $.getJSON(apiEndPoint, function(data) {
         buildPanel(data);
     });
+
     //Build Panel w/ Restaurant Data
     function buildPanel(data) {
         var panel = $('<div>').addClass('panel panel-default');
@@ -21,25 +22,21 @@ $(document).ready(function() {
             .addClass('img-thumbnail')
             .attr('src', 'http://img2.10bestmedia.com/Images/Photos/261521/Restaurant---Cristal-Room--J-r-me-Mondi-re_54_990x660.jpg')
             .attr('alt', '...');
-        
-        //Dynamically add first column of restaurant data
-        var imgColumn = $('<div>').addClass('col-xs-4').append(image);
 
-        //Dynamically add 2nd column of restaurant data
-        var restaurant = data.results[1].name;
+        //Show restaurant data
+        var restaurant = data.results[0].name;
         var restaurantTitle = $('<h2>').html(restaurant);
-        var restaurantContainer = $('<div>').addClass('col-xs-12').append(restaurantTitle);
-        var restaurantRow = $('<div>').addClass('row').append(restaurantContainer);
-
-        //Append restaurant name and address
-        var restaurantColumn = $('<div>').addClass('col-xs-4').append(restaurantRow);
+        var restaurantColumn = $('<div>').addClass('col-xs-12').append(restaurantTitle);
+        var restaurantRow = $('<div>').addClass('row').append(restaurantColumn);
 
 
+        //Build specific location url
         var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid='
-        var placeId = data.results[1].place_id;
+        var placeId = data.results[0].place_id;
         var placeEndPoint = placeURL + placeId;
         console.log(placeEndPoint);
 
+        //Show Address
         function getAddress(endpoint, callback) {
             $.getJSON(endpoint, function (placeData) {
                 var streetNumber = placeData.result.address_components[0].short_name;
@@ -52,20 +49,43 @@ $(document).ready(function() {
             });
         }
 
-        
+
         getAddress(placeEndPoint, function(address) {
             var restaurantAddress = $('<h4>').addClass('text-muted').append(address);
-            var addressContainer = $('<div>').addClass('col-xs-12').append(restaurantAddress);
-            var addressRow = $('<div>').addClass('row').append(addressContainer);
-            restaurantColumn.append(addressRow);
+            var addressColumn = $('<div>').addClass('col-xs-12').append(restaurantAddress);
+            var addressRow = $('<div>').addClass('row').append(addressColumn);
+            secondColumn.append(addressRow);
 
         });
 
+        //Show Icon & Rating
+        var icon = $('<i>').addClass('fa fa-star-o fa-3x');
+        var iconColumn = $('<div>').addClass('col-xs-2 col-xs-offset-3').append(icon);
+
+        var rating =  data.results[0].rating;
+        var ratingResults = $('<h2>').html(rating + " Stars");
+        var ratingColumn = $('<div>').addClass('col-xs-7').append(ratingResults);
+
+        var ratingRow = $('<div>').addClass('row').append(iconColumn);
+        ratingRow.append(ratingColumn);
+
+        //Show Status
+        var status = data.results[0].opening_hours.open_now;
+
+        // if (status === true) {
+
+        // }
+
+        //Dyanmically add data to columns
+        var firstColumn = $('<div>').addClass('col-xs-4').append(image);
+        var secondColumn = $('<div>').addClass('col-xs-4').append(restaurantRow);
+        var thirdColumn = $('<div>').addClass('col-xs-4').append(ratingRow);
 
         //Append all columns to panel
         var contentRow = $('<div>').addClass('row content-row');
-        var imageContainer = contentRow.append(imgColumn);
-        var restaurantContainer = contentRow.append(restaurantColumn);
+        contentRow.append(firstColumn);
+        contentRow.append(secondColumn);
+        contentRow.append(thirdColumn);
         var contentPanelBody = panelBody.append(contentRow);
         var newPanel = panel.append(contentPanelBody);
         var panelContents = $('.main-column').append(newPanel);
