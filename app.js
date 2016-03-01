@@ -40,6 +40,7 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/register', function(req, res) {
+  debugger
   // res.render('registration');
   userstable.Users.create(req.body).then(function(result){
     res.redirect('/places');
