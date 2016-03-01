@@ -1,8 +1,9 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
+var bodyParser = require('body-parser');
 var app = express();
 var PORT = process.env.PORT || 3000;
-
+var Users = require('./models/users.js');
 
 // app.use(session({
 //   secret: 'Top Secret',
@@ -24,6 +25,12 @@ app.set('view engine', 'handlebars');
 // MIDDLEWARE - Public
 app.use('/static', express.static('public'));
 
+// MIDDLEWARE - body parser
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
+// ROUTES
 app.get('/', function(req, res) {
   res.render('home');
 });
@@ -32,8 +39,14 @@ app.get('/login', function(req, res) {
   res.render('login');
 });
 
-app.get('/registration', function(req, res) {
-  res.render('registration');
+app.post('/register', function(req, res) {
+  // res.render('registration');
+  Users.create(req.body).then(function(result){
+    res.redirect('/places');
+  }).catch(function(err){
+    console.log(err);
+    res.redirect('/');
+  })
 });
 
 app.get('/places', function(req, res) {
