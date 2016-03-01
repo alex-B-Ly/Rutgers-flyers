@@ -10,14 +10,47 @@ $(document).ready(function() {
   //Build URL
   var apiEndPoint = googlePlacesURL + 'key=' + apiKey + '&location=' + latLng + '&radius=' + radius + '&type=' + type;
 
-  //Ajax call
+  //Ajax call to get restaurant data based on location and radius
   $.getJSON(apiEndPoint, function(data) {
-    buildPanel(data);
+
+    for (var i = 0; i < data.results.length; i++) {
+
+      //Build unique URL for each individual place
+      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid='
+      var placeId = data.results[i].place_id;
+      var placeEndPoint = placeURL + placeId;
+
+    
+      (function(index) {
+        console.log(index);
+        //Get unique data for each restaurant based on initial API call
+        $.getJSON(placeEndPoint, function (placeData) {
+            //Get address data
+            var streetNumber = placeData.result.address_components[0].short_name;
+            var streetName = placeData.result.address_components[1].short_name;
+            var city =  placeData.result.address_components[2].short_name;
+            var state = placeData.result.address_components[3].short_name;
+            var zipCode = placeData.result.address_components[5].short_name;
+            var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode;
+
+            //Get name and open/closed status of each restaurant
+            var restaurant = data.results[index].name;
+            var rating = data.results[index].rating;
+            var status = data.results[index].opening_hours.open_now;
+
+            //Pass data to buildPanel function to create unique panel for each restaurant
+            buildPanel(address, restaurant, rating, status); 
+        });
+      })(i);
+
+
+    } 
+
   });
 
   //Build Panel w/ Restaurant Data
-  function buildPanel(data) {
-    for (var i = 0; i < data.results.length; i++) {
+  function buildPanel(address, restaurant, rating, status) {
+
       var panel = $('<div>').addClass('panel panel-default');
       var panelBody = $('<div>').addClass('panel-body');
       var image = $('<img>')
@@ -26,44 +59,19 @@ $(document).ready(function() {
         .attr('alt', '...');
 
       //Show restaurant data
-      var restaurant = data.results[i].name;
       var restaurantTitle = $('<h2>').html(restaurant);
       var restaurantColumn = $('<div>').addClass('col-xs-12').append(restaurantTitle);
       var restaurantRow = $('<div>').addClass('row').append(restaurantColumn);
 
 
-      //Build specific location url
-      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid='
-      var placeId = data.results[i].place_id;
-      var placeEndPoint = placeURL + placeId;
-      console.log(placeEndPoint);
-
-      //Show Address
-      function getAddress(endpoint, callback) {
-        $.getJSON(endpoint, function (placeData) {
-          var streetNumber = placeData.result.address_components[0].short_name;
-          var streetName = placeData.result.address_components[1].short_name;
-          var city =  placeData.result.address_components[2].short_name;
-          var state = placeData.result.address_components[3].short_name;
-          var zipCode = placeData.result.address_components[5].short_name;
-          var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode;
-          callback(address);
-        });
-
-      }
-      getAddress(placeEndPoint, function(address) {
-        var restaurantAddress = $('<h4>').addClass('text-muted').append(address);
-        var addressColumn = $('<div>').addClass('col-xs-12').append(restaurantAddress);
-        var addressRow = $('<div>').addClass('row').append(addressColumn);
-        secondColumn.append(addressRow);
-      });
-
+      var restaurantAddress = $('<h4>').addClass('text-muted').append(address);
+      var addressColumn = $('<div>').addClass('col-xs-12').append(restaurantAddress);
+      var addressRow = $('<div>').addClass('row').append(addressColumn);
 
       //Show Icon & Rating
       var icon = $('<i>').addClass('fa fa-star-o fa-3x');
       var iconColumn = $('<div>').addClass('col-xs-2 col-xs-offset-3').append(icon);
 
-      var rating =  data.results[i].rating;
       var ratingResults = $('<h2>').html(rating + " Stars");
       var ratingColumn = $('<div>').addClass('col-xs-7').append(ratingResults);
 
@@ -71,7 +79,6 @@ $(document).ready(function() {
       ratingRow.append(ratingColumn);
 
       //Show Status
-      var status = data.results[i].opening_hours.open_now;
       var statusText;
 
       if (status === true) {
@@ -90,6 +97,7 @@ $(document).ready(function() {
       var secondColumn = $('<div>').addClass('col-xs-4').append(restaurantRow);
       var thirdColumn = $('<div>').addClass('col-xs-4').append(ratingRow);
 
+      secondColumn.append(addressRow);
       thirdColumn.append(statusRow);
 
       //Append all columns to panel
@@ -102,7 +110,5 @@ $(document).ready(function() {
       var panelContents = $('.main-column').append(newPanel);
 
     }
-
-  }
 
 });
