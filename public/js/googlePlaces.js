@@ -9,6 +9,7 @@ $(document).ready(function() {
 
   //Build URL
   var apiEndPoint = googlePlacesURL + 'key=' + apiKey + '&location=' + latLng + '&radius=' + radius + '&type=' + type;
+  console.log(apiEndPoint);
 
   //Ajax call to get restaurant data based on location and radius
   $.getJSON(apiEndPoint, function(data) {
@@ -22,7 +23,6 @@ $(document).ready(function() {
 
     
       (function(index) {
-        console.log(index);
         //Get unique data for each restaurant based on initial API call
         $.getJSON(placeEndPoint, function (placeData) {
             //Get address data
@@ -38,8 +38,13 @@ $(document).ready(function() {
             var rating = data.results[index].rating;
             var status = data.results[index].opening_hours.open_now;
 
+            //Add image 
+            var imageId = data.results[index].photos[0].photo_reference;
+            var imageUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&maxheight=300&photoreference=' + imageId + '&key=' + apiKey;
+            var image = $("<img>").attr('src', imageUrl).addClass('img-thumbnail');
+
             //Pass data to buildPanel function to create unique panel for each restaurant
-            buildPanel(address, restaurant, rating, status); 
+            buildPanel(address, restaurant, rating, status, image); 
         });
       })(i);
 
@@ -49,14 +54,10 @@ $(document).ready(function() {
   });
 
   //Build Panel w/ Restaurant Data
-  function buildPanel(address, restaurant, rating, status) {
+  function buildPanel(address, restaurant, rating, status, image) {
 
       var panel = $('<div>').addClass('panel panel-default');
       var panelBody = $('<div>').addClass('panel-body');
-      var image = $('<img>')
-        .addClass('img-thumbnail')
-        .attr('src', 'http://img2.10bestmedia.com/Images/Photos/261521/Restaurant---Cristal-Room--J-r-me-Mondi-re_54_990x660.jpg')
-        .attr('alt', '...');
 
       //Show restaurant data
       var restaurantTitle = $('<h2>').html(restaurant);
@@ -78,7 +79,7 @@ $(document).ready(function() {
       var ratingRow = $('<div>').addClass('row').append(iconColumn);
       ratingRow.append(ratingColumn);
 
-      //Show Status
+      //Show Open/Closed Status
       var statusText;
 
       if (status === true) {
