@@ -5,6 +5,9 @@
 /* BASE files */
 /* MIXINS */
 /* BASE */
+body {
+  background: #F4F4F4; }
+
 h1 {
   font-size: 3.5em; }
 
@@ -21,6 +24,9 @@ a:active {
   text-decoration: none; }
 
 /* MODULES files */
+#main_login {
+  display: none; }
+
 /* LAYOUT files */
 
 /*# sourceMappingURL=style.css.map */
