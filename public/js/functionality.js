@@ -40,6 +40,7 @@ $(document).ready(function() {
         $('.reg-error').text('Your passwords don\'t match.');
         passwordFlag = false;
       }else{
+        $('.reg-error').empty();
         passwordFlag = true;
       }
     }
@@ -49,7 +50,6 @@ $(document).ready(function() {
     $('#reg-lname').on('focusout', regNameValid);
     $('#reg-email').on('focusout', regEmailValid);
     $('#reg-email').on('keyup', regEmailKeyup);
-    $('#reg-password').on('keyup', passwordValid);
     $('#reg-repass').on('keyup', passwordValid);
   }
 
