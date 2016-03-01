@@ -40,7 +40,7 @@ $(document).ready(function() {
 
             //Add image 
             var imageId = data.results[index].photos[0].photo_reference;
-            var imageUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&maxheight=300&photoreference=' + imageId + '&key=' + apiKey;
+            var imageUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&maxheight=300&photoreference=' + imageId + '&key=' + apiKey;
             var image = $("<img>").attr('src', imageUrl).addClass('img-thumbnail');
 
             //Pass data to buildPanel function to create unique panel for each restaurant
@@ -83,9 +83,9 @@ $(document).ready(function() {
       var statusText;
 
       if (status === true) {
-        statusText = $('<h4>').addClass('open-now text-center').html('Open Now');
+        statusText = $('<h4>').addClass('alert alert-success text-center').html('Open Now');
       } else {
-        statusText = $("<h4>").addClass('text-center').html('Closed Now');
+        statusText = $("<h4>").addClass('alert alert-danger text-center').html('Closed Now');
       }
 
       var statusColumn = $("<div>")
