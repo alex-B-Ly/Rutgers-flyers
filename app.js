@@ -2,8 +2,10 @@ var express = require('express');
 var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var app = express();
+// var sequelize = require('sequelize');
 var PORT = process.env.PORT || 3000;
 var userstable = require('./models/users.js');
+var connection = require('./config/connection.js');
 
 // app.use(session({
 //   secret: 'Top Secret',
@@ -55,6 +57,8 @@ app.get('/places', function(req, res) {
 });
 
 
-app.listen(PORT, function() {
-  console.log("Listening on PORT %s", PORT);
+connection.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log("Listening on PORT %s", PORT);
+  });
 });
