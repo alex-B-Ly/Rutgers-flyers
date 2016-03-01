@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 var connection = require('../config/connection.js');
 var bcrypt = require("bcryptjs");
 
-var users = {
+var userskeys = {
   f_name:{
     type:Sequelize.STRING,
     allowNull: false
@@ -25,7 +25,7 @@ var users = {
   }
 }
 
-var hooks = {
+var passhook = {
   hooks: {
     beforeCreate: function(input){
       input.password = bcrypt.hashSync(input.password, 10);
@@ -33,6 +33,6 @@ var hooks = {
   }
 }
 
-var Users = connection.define('users', users, hooks);
+var Users = connection.define('users', userskeys, passhook);
 
-module.exports = Users;
+exports.Users = Users;

@@ -3,7 +3,7 @@ var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var app = express();
 var PORT = process.env.PORT || 3000;
-var Users = require('./models/users.js');
+var userstable = require('./models/users.js');
 
 // app.use(session({
 //   secret: 'Top Secret',
@@ -41,7 +41,7 @@ app.get('/login', function(req, res) {
 
 app.post('/register', function(req, res) {
   // res.render('registration');
-  Users.create(req.body).then(function(result){
+  userstable.Users.create(req.body).then(function(result){
     res.redirect('/places');
   }).catch(function(err){
     console.log(err);
