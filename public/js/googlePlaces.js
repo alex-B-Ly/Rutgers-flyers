@@ -41,7 +41,7 @@ $(document).ready(function() {
             //Add image 
             var imageId = data.results[index].photos[0].photo_reference;
             var imageUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&maxheight=300&photoreference=' + imageId + '&key=' + apiKey;
-            var image = $("<img>").attr('src', imageUrl).addClass('img-thumbnail');
+            var image = $("<img>").attr('src', imageUrl).addClass('img-thumbnail center-block');
 
             //Pass data to buildPanel function to create unique panel for each restaurant
             buildPanel(address, restaurant, rating, status, image); 
