@@ -4,10 +4,15 @@ $(document).ready(function() {
   function validateRegister(){
     var nameFlag, emailFlag, passwordFlag;
 
+    function validCheck(){
+      if(nameFlag === true && emailFlag === true && passwordFlag === true){
+        $('.reg-button').prop("disabled", false);
+      }
+    }
+
     function regNameValid(){
       if($('#reg-fname').val().length < 1 || $('#reg-lname').val().length < 1){
-        $('.reg-error').text('You must enter a valid name');
-        $('.reg-button').prop("disabled", true);
+        $('.reg-error').text('You must enter a valid name');        
         nameFlag = false;
       }else{
         $('.reg-error').empty();
@@ -27,8 +32,7 @@ $(document).ready(function() {
     function regEmailKeyup(){
       if(emailInput.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i)){
         $('.reg-error').empty();
-        emailFlag = true;
-        console.log(emailFlag);
+        emailFlag = true;        
       }
     }
 
