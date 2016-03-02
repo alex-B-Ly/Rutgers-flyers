@@ -2,10 +2,10 @@ $(document).ready(function() {
   
   // REGISTER VALIDATION
   function validateRegister(){
-    var nameFlag, emailFlag, passwordFlag;
+    var nameFlag, emailFlag, usernameFlag, passwordFlag;
 
     function validCheck(){
-      if(nameFlag === true && emailFlag === true && passwordFlag === true){
+      if(nameFlag === true && emailFlag === true && usernameFlag === true && passwordFlag === true){
         $('.reg-button').prop("disabled", false);
       }
     }
@@ -17,6 +17,8 @@ $(document).ready(function() {
       }else{
         $('.reg-error').empty();
         nameFlag = true;
+        console.log('nameFlag is ',nameFlag);
+        validCheck();
       }
     }
 
@@ -26,13 +28,25 @@ $(document).ready(function() {
       if(emailInput.length > 0 && (!emailInput.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i))){
         $('.reg-error').text('Please enter a valid email');
         emailFlag = false;
+      }else if(emailInput.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i)){
+        $('.reg-error').empty();
+        emailFlag = true;
+        console.log('emailFlag is ',emailFlag);
+        validCheck();    
       }
     }
 
-    function regEmailKeyup(){
-      if(emailInput.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i)){
+    function usernameValid(){
+      var usernameInput = $('#reg-username').val();
+      if(!usernameInput){
+        $('.reg-error').text('You must choose a username.');
+      }else if(usernameInput.length < 5){
+        $('.reg-error').text('Your username must be at least 5 characters long.');
+      }else{
         $('.reg-error').empty();
-        emailFlag = true;        
+        usernameFlag = true;
+        console.log('usernameFlag is ',usernameFlag);
+        validCheck();
       }
     }
 
@@ -46,6 +60,8 @@ $(document).ready(function() {
       }else{
         $('.reg-error').empty();
         passwordFlag = true;
+        console.log('passFlag is ',passwordFlag);
+        validCheck();
       }
     }
 
@@ -53,7 +69,9 @@ $(document).ready(function() {
     $('#reg-fname').on('focusout', regNameValid);
     $('#reg-lname').on('focusout', regNameValid);
     $('#reg-email').on('focusout', regEmailValid);
-    $('#reg-email').on('keyup', regEmailKeyup);
+    $('#reg-email').on('keyup', regEmailValid);
+    $('#reg-username').on('focusout', usernameValid);
+    $('#reg-username').on('keyup', usernameValid);
     $('#reg-repass').on('keyup', passwordValid);
   }
 
