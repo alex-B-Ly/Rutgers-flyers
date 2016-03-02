@@ -24,12 +24,9 @@ a:active {
   text-decoration: none; }
 
 /* MODULES files */
-#main_login {
-  display: none; }
-
 .button-row {
-  margin-top: 20px;
-}
+  margin-top: 20px; }
+
 /* LAYOUT files */
 
 /*# sourceMappingURL=style.css.map */
