@@ -27,6 +27,9 @@ a:active {
 #main_login {
   display: none; }
 
+.button-row {
+  margin-top: 20px;
+}
 /* LAYOUT files */
 
 /*# sourceMappingURL=style.css.map */
