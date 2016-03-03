@@ -9,12 +9,11 @@ $(document).ready(function() {
 
   //Build URL
   var apiEndPoint = googlePlacesURL + 'key=' + apiKey + '&location=' + latLng + '&radius=' + radius + '&type=' + type;
-  console.log(apiEndPoint);
 
   //Ajax call to get restaurant data based on location and radius
   $.getJSON(apiEndPoint, function(data) {
 
-    for (var i = 0; i < data.results.length; i++) {
+    for (var i = 0; i < 2; i++) {
 
       //Build unique URL for each individual place
       var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
@@ -39,7 +38,6 @@ $(document).ready(function() {
 
             //Get specific id for each restaurant to pass to data-tag
             var placeDataId = data.results[index].place_id;
-            console.log(placeDataId);
 
             //Add image 
             var imageId = data.results[index].photos[0].photo_reference;
@@ -121,9 +119,44 @@ $(document).ready(function() {
     }
 
     $(document).on('click', '.info-button', function() {
+      $('tbody').empty();
+      $('.phone-icon-col').empty();
+      $('.phone-number-col').empty();
+      $('.price-icon-col').empty();
+      $('.price-col').empty();
       $('#myModal').modal();
+      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
+      var placeId = $(this).attr('data-place-id');
+      var placeEndPoint = placeURL + placeId;
+      $.getJSON(placeEndPoint, function(placeData) {
+        //Find phone number and append to modal
+        var phoneNumber = placeData.result.formatted_phone_number;
+        var phoneHeading = $('<h4>').html(phoneNumber);
+        var phoneIcon = '<i class="fa fa-phone fa-3x"></i>'
+        $('.phone-icon-col').append(phoneIcon);
+        $('.phone-number-col').append(phoneHeading);
+
+        //Find price level and append to modal
+        var price = placeData.result.price_level;
+        console.log(price);
+        if (price === undefined) {
+          price = 'N/A';
+        }
+        var priceHeading = $('<h4>').html('Price Level: ' + price);
+        var priceIcon = '<i class="fa fa-usd fa-3x"></i>';
+        $('.price-icon-col').append(priceIcon);
+        $('.price-col').append(priceHeading);
+
+        //Fetch weekday opening/closing hours and append to modal
+        var weekdayText = placeData.result.opening_hours.weekday_text;
+        var weekdayHours;
+        var weekdayRow;
+        for (var i = 0; i < weekdayText.length; i++) {
+          weekdayHours = $('<td>').html(weekdayText[i]);
+          weekdayRow = $('<tr>').append(weekdayHours);
+          $('tbody').append(weekdayRow);
+        }
+      });
     });
-
-
 
 });
