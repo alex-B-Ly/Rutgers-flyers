@@ -38,7 +38,7 @@ var Users = connection.define('users',
             if(user){
               next('Email already exists');
             }else{
-              next()
+              next();
             }
           })
           .catch(function(err){
