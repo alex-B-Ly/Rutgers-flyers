@@ -1,3 +1,4 @@
+var env = require('dotenv').config({ silent: true });
 var express = require('express');
 var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
