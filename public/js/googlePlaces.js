@@ -17,10 +17,9 @@ $(document).ready(function() {
     for (var i = 0; i < data.results.length; i++) {
 
       //Build unique URL for each individual place
-      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid='
+      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
       var placeId = data.results[i].place_id;
       var placeEndPoint = placeURL + placeId;
-      console.log(placeEndPoint);
     
       (function(index) {
         //Get unique data for each restaurant based on initial API call
@@ -38,13 +37,17 @@ $(document).ready(function() {
             var rating = data.results[index].rating;
             var status = data.results[index].opening_hours.open_now;
 
+            //Get specific id for each restaurant to pass to data-tag
+            var placeDataId = data.results[index].place_id;
+            console.log(placeDataId);
+
             //Add image 
             var imageId = data.results[index].photos[0].photo_reference;
             var imageUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&maxheight=300&photoreference=' + imageId + '&key=' + apiKey;
             var image = $("<img>").attr('src', imageUrl).addClass('img-thumbnail center-block');
 
             //Pass data to buildPanel function to create unique panel for each restaurant
-            buildPanel(address, restaurant, rating, status, image); 
+            buildPanel(address, restaurant, rating, status, image, placeDataId); 
         });
       })(i);
 
@@ -54,7 +57,7 @@ $(document).ready(function() {
   });
 
   //Build Panel w/ Restaurant Data
-  function buildPanel(address, restaurant, rating, status, image) {
+  function buildPanel(address, restaurant, rating, status, image, placeDataId) {
 
       //Show restaurant title and address
       var restaurantTitle = $('<h2>').addClass('text-center').html(restaurant);
@@ -82,9 +85,14 @@ $(document).ready(function() {
       var statusRow = $('<div>').addClass('row').append(statusColumn);
 
       //Show Buttons
-      var reviewButton = $('<button>').addClass('btn btn-default btn-block').html('Reviews');
+      var reviewButton = $('<button>')
+        .addClass('btn btn-default btn-block review-button')
+        .html('Reviews');
       var reviewButtonColumn = $('<div>').addClass('col-xs-6 col-sm-6 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1').append(reviewButton);
-      var infoButton = $('<button>').addClass('btn btn-primary btn-block').html('More Info');
+      var infoButton = $('<button>')
+        .addClass('btn btn-primary btn-block info-button')
+        .attr('data-place-id', placeDataId)
+        .html('More Info');
       var infoButtonColumn = $('<div>').addClass('col-xs-6 col-sm-6 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1').append(infoButton);
       var buttonRow = $('<div>').addClass('row button-row').append(reviewButtonColumn);
       buttonRow.append(infoButtonColumn);
@@ -111,5 +119,11 @@ $(document).ready(function() {
       var panelContents = $('.main-column').append(newPanel);
 
     }
+
+    $(document).on('click', '.info-button', function() {
+      $('#myModal').modal();
+    });
+
+
 
 });
