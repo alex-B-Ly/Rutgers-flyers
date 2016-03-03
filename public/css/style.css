@@ -24,8 +24,11 @@ a:active {
   text-decoration: none; }
 
 /* MODULES files */
-#main_login {
-  display: none; }
+.button-row {
+  margin-top: 20px; }
+
+.phone-row {
+  margin-bottom: 10px; }
 
 /* LAYOUT files */
 
