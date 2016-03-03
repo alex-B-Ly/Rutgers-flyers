@@ -42,12 +42,11 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/register', function(req, res) {
-  debugger
   // res.render('registration');
   userstable.Users.create(req.body).then(function(result){
     res.redirect('/places');
   }).catch(function(err){
-    console.log(err);
+    console.log(err.errors[0].message);
     res.redirect('/');
   })
 });
