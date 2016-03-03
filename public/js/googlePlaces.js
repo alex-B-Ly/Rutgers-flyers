@@ -85,6 +85,7 @@ $(document).ready(function() {
       //Show Buttons
       var reviewButton = $('<button>')
         .addClass('btn btn-default btn-block review-button')
+        .attr('data-place-id', placeDataId)
         .html('Reviews');
       var reviewButtonColumn = $('<div>').addClass('col-xs-6 col-sm-6 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1').append(reviewButton);
       var infoButton = $('<button>')
@@ -118,21 +119,48 @@ $(document).ready(function() {
 
     }
 
+    $(document).on('click', '.review-button', function() {
+      $('.modal-body').empty();
+      $('#reviewModal').modal();
+
+      //Build URL for each Google location
+      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
+      var placeId = $(this).attr('data-place-id');
+      var placeEndPoint = placeURL + placeId;
+
+      var review, user, reviewContainer, userContainer, blockquote;
+      $.getJSON(placeEndPoint, function(placeData) {
+        console.log(placeData);
+        for (var i = 0; i < 2; i++) {
+          review = placeData.result.reviews[i].text;
+          user = placeData.result.reviews[i].author_name;
+          reviewContainer = $('<p>').addClass('review-text').html(review);
+          userContainer = $('<footer><cite title="Source Title">' + user + '</cite></footer>');
+          blockquote = $('<blockquote>').addClass('blockquote-reverse').append(reviewContainer);
+          blockquote.append(userContainer);
+          $('.modal-body').append(blockquote);
+        }
+      });
+    });
+
     $(document).on('click', '.info-button', function() {
       $('tbody').empty();
       $('.phone-icon-col').empty();
       $('.phone-number-col').empty();
       $('.price-icon-col').empty();
       $('.price-col').empty();
-      $('#myModal').modal();
+      $('#infoModal').modal();
+
+      //Build URL for each Google Location
       var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
       var placeId = $(this).attr('data-place-id');
       var placeEndPoint = placeURL + placeId;
+
       $.getJSON(placeEndPoint, function(placeData) {
         //Find phone number and append to modal
         var phoneNumber = placeData.result.formatted_phone_number;
         var phoneHeading = $('<h4>').html(phoneNumber);
-        var phoneIcon = '<i class="fa fa-phone fa-3x"></i>'
+        var phoneIcon = '<i class="fa fa-phone fa-3x"></i>';
         $('.phone-icon-col').append(phoneIcon);
         $('.phone-number-col').append(phoneHeading);
 
@@ -149,8 +177,7 @@ $(document).ready(function() {
 
         //Fetch weekday opening/closing hours and append to modal
         var weekdayText = placeData.result.opening_hours.weekday_text;
-        var weekdayHours;
-        var weekdayRow;
+        var weekdayHours, weekdayRow;
         for (var i = 0; i < weekdayText.length; i++) {
           weekdayHours = $('<td>').html(weekdayText[i]);
           weekdayRow = $('<tr>').append(weekdayHours);
