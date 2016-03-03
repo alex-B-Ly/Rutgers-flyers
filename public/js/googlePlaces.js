@@ -9,18 +9,16 @@ $(document).ready(function() {
 
   //Build URL
   var apiEndPoint = googlePlacesURL + 'key=' + apiKey + '&location=' + latLng + '&radius=' + radius + '&type=' + type;
-  console.log(apiEndPoint);
 
   //Ajax call to get restaurant data based on location and radius
   $.getJSON(apiEndPoint, function(data) {
 
-    for (var i = 0; i < data.results.length; i++) {
+    for (var i = 0; i < 2; i++) {
 
       //Build unique URL for each individual place
-      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid='
+      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
       var placeId = data.results[i].place_id;
       var placeEndPoint = placeURL + placeId;
-      console.log(placeEndPoint);
     
       (function(index) {
         //Get unique data for each restaurant based on initial API call
@@ -38,13 +36,16 @@ $(document).ready(function() {
             var rating = data.results[index].rating;
             var status = data.results[index].opening_hours.open_now;
 
+            //Get specific id for each restaurant to pass to data-tag
+            var placeDataId = data.results[index].place_id;
+
             //Add image 
             var imageId = data.results[index].photos[0].photo_reference;
             var imageUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&maxheight=300&photoreference=' + imageId + '&key=' + apiKey;
             var image = $("<img>").attr('src', imageUrl).addClass('img-thumbnail center-block');
 
             //Pass data to buildPanel function to create unique panel for each restaurant
-            buildPanel(address, restaurant, rating, status, image); 
+            buildPanel(address, restaurant, rating, status, image, placeDataId); 
         });
       })(i);
 
@@ -54,7 +55,7 @@ $(document).ready(function() {
   });
 
   //Build Panel w/ Restaurant Data
-  function buildPanel(address, restaurant, rating, status, image) {
+  function buildPanel(address, restaurant, rating, status, image, placeDataId) {
 
       //Show restaurant title and address
       var restaurantTitle = $('<h2>').addClass('text-center').html(restaurant);
@@ -82,9 +83,15 @@ $(document).ready(function() {
       var statusRow = $('<div>').addClass('row').append(statusColumn);
 
       //Show Buttons
-      var reviewButton = $('<button>').addClass('btn btn-default btn-block').html('Reviews');
+      var reviewButton = $('<button>')
+        .addClass('btn btn-default btn-block review-button')
+        .attr('data-place-id', placeDataId)
+        .html('Reviews');
       var reviewButtonColumn = $('<div>').addClass('col-xs-6 col-sm-6 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1').append(reviewButton);
-      var infoButton = $('<button>').addClass('btn btn-primary btn-block').html('More Info');
+      var infoButton = $('<button>')
+        .addClass('btn btn-primary btn-block info-button')
+        .attr('data-place-id', placeDataId)
+        .html('More Info');
       var infoButtonColumn = $('<div>').addClass('col-xs-6 col-sm-6 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1').append(infoButton);
       var buttonRow = $('<div>').addClass('row button-row').append(reviewButtonColumn);
       buttonRow.append(infoButtonColumn);
@@ -111,5 +118,72 @@ $(document).ready(function() {
       var panelContents = $('.main-column').append(newPanel);
 
     }
+
+    $(document).on('click', '.review-button', function() {
+      $('.modal-body').empty();
+      $('#reviewModal').modal();
+
+      //Build URL for each Google location
+      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
+      var placeId = $(this).attr('data-place-id');
+      var placeEndPoint = placeURL + placeId;
+
+      var review, user, reviewContainer, userContainer, blockquote;
+      $.getJSON(placeEndPoint, function(placeData) {
+        console.log(placeData);
+        for (var i = 0; i < 2; i++) {
+          review = placeData.result.reviews[i].text;
+          user = placeData.result.reviews[i].author_name;
+          reviewContainer = $('<p>').addClass('review-text').html(review);
+          userContainer = $('<footer><cite title="Source Title">' + user + '</cite></footer>');
+          blockquote = $('<blockquote>').addClass('blockquote-reverse').append(reviewContainer);
+          blockquote.append(userContainer);
+          $('.modal-body').append(blockquote);
+        }
+      });
+    });
+
+    $(document).on('click', '.info-button', function() {
+      $('tbody').empty();
+      $('.phone-icon-col').empty();
+      $('.phone-number-col').empty();
+      $('.price-icon-col').empty();
+      $('.price-col').empty();
+      $('#infoModal').modal();
+
+      //Build URL for each Google Location
+      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
+      var placeId = $(this).attr('data-place-id');
+      var placeEndPoint = placeURL + placeId;
+
+      $.getJSON(placeEndPoint, function(placeData) {
+        //Find phone number and append to modal
+        var phoneNumber = placeData.result.formatted_phone_number;
+        var phoneHeading = $('<h4>').html(phoneNumber);
+        var phoneIcon = '<i class="fa fa-phone fa-3x"></i>';
+        $('.phone-icon-col').append(phoneIcon);
+        $('.phone-number-col').append(phoneHeading);
+
+        //Find price level and append to modal
+        var price = placeData.result.price_level;
+        console.log(price);
+        if (price === undefined) {
+          price = 'N/A';
+        }
+        var priceHeading = $('<h4>').html('Price Level: ' + price);
+        var priceIcon = '<i class="fa fa-usd fa-3x"></i>';
+        $('.price-icon-col').append(priceIcon);
+        $('.price-col').append(priceHeading);
+
+        //Fetch weekday opening/closing hours and append to modal
+        var weekdayText = placeData.result.opening_hours.weekday_text;
+        var weekdayHours, weekdayRow;
+        for (var i = 0; i < weekdayText.length; i++) {
+          weekdayHours = $('<td>').html(weekdayText[i]);
+          weekdayRow = $('<tr>').append(weekdayHours);
+          $('tbody').append(weekdayRow);
+        }
+      });
+    });
 
 });
