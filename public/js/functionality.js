@@ -7,6 +7,8 @@ $(document).ready(function() {
     function validCheck(){
       if(nameFlag === true && emailFlag === true && usernameFlag === true && passwordFlag === true){
         $('.reg-button').prop("disabled", false);
+      }else{
+        $('.reg-button').prop("disabled", true);
       }
     }
 
