@@ -120,7 +120,7 @@ $(document).ready(function() {
     }
 
     $(document).on('click', '.review-button', function() {
-      $('.modal-body').empty();
+      $('.review-body').empty();
       $('#reviewModal').modal();
 
       //Build URL for each Google location
@@ -140,7 +140,7 @@ $(document).ready(function() {
           userContainer = $('<footer><cite title="Source Title">' +  user + '</cite></footer>');
           blockquote = $('<blockquote>').addClass('blockquote-reverse').append(reviewContainer);
           blockquote.append(userContainer);
-          $('.modal-body').append(blockquote);
+          $('.review-body').append(blockquote);
         }
       });
     });

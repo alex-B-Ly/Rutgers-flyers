@@ -27,6 +27,21 @@ a:active {
 .button-row {
   margin-top: 20px; }
 
+.nav-buttons {
+  margin-left: 20px;
+  font-size: 1.2em;
+  background: #2e2f2f;
+  border-radius: 20px;
+  padding: 5px 10px;
+  transition: all 1.2s; }
+
+.nav-buttons:hover {
+  background: #4c4e4e;
+  text-shadow: 0 0 5px #fff; }
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+  padding: 7px 0; }
+
 .phone-row {
   margin-bottom: 10px; }
 
