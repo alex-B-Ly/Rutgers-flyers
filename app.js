@@ -51,10 +51,17 @@ app.post('/register', function(req, res) {
   })
 });
 
-app.get('/places', function(req, res) {
-  res.render('places');
+app.get('/food', function(req, res) {
+  res.render('food');
 });
 
+app.get('/drink', function(req, res) {
+  res.render('drink');
+});
+
+app.get('/study', function(req, res) {
+  res.render('study');
+});
 
 connection.sync().then(function() {
   app.listen(PORT, function() {
