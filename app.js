@@ -44,17 +44,24 @@ app.get('/login', function(req, res) {
 app.post('/register', function(req, res) {
   // res.render('registration');
   userstable.Users.create(req.body).then(function(result){
-    res.redirect('/places');
+    res.redirect('/food');
   }).catch(function(err){
     console.log(err.errors[0].message);
     res.redirect('/');
   })
 });
 
-app.get('/places', function(req, res) {
-  res.render('places');
+app.get('/food', function(req, res) {
+  res.render('food');
 });
 
+app.get('/drink', function(req, res) {
+  res.render('drink');
+});
+
+app.get('/study', function(req, res) {
+  res.render('study');
+});
 
 connection.sync().then(function() {
   app.listen(PORT, function() {
