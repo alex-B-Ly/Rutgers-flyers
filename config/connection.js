@@ -1,3 +1,4 @@
+var env = require('dotenv').config({ silent: true });
 var mysql = require('mysql');
 var Sequelize = require('sequelize');
 
@@ -7,8 +8,11 @@ var Sequelize = require('sequelize');
 // var jawsConnection = mysql.createConnection(process.env.JAWSDB_URL);
 // jawsConnection.connect()
 
+console.log(process.env.NODE_ENV);
+console.log(process.env.JAWSDB_URL);
+
 if (process.env.NODE_ENV === 'production') {
-  console.log(process.env.JAWSDB_URL);
+
   var connection  = new Sequelize(process.env.JAWSDB_URL);  
 } else {
   var connection = new Sequelize('rutgersflyers_db', 'root');
