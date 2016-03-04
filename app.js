@@ -44,7 +44,7 @@ app.get('/login', function(req, res) {
 app.post('/register', function(req, res) {
   // res.render('registration');
   userstable.Users.create(req.body).then(function(result){
-    res.redirect('/places');
+    res.redirect('/food');
   }).catch(function(err){
     console.log(err.errors[0].message);
     res.redirect('/');
