@@ -120,7 +120,7 @@ $(document).ready(function() {
     }
 
     $(document).on('click', '.review-button', function() {
-      $('.modal-body').empty();
+      $('.review-body').empty();
       $('#reviewModal').modal();
 
       //Build URL for each Google location
@@ -128,17 +128,19 @@ $(document).ready(function() {
       var placeId = $(this).attr('data-place-id');
       var placeEndPoint = placeURL + placeId;
 
-      var review, user, reviewContainer, userContainer, blockquote;
+      var review, user, reviewContainer, userContainer, blockquote, imageUrl, userImage;
       $.getJSON(placeEndPoint, function(placeData) {
         console.log(placeData);
         for (var i = 0; i < 2; i++) {
           review = placeData.result.reviews[i].text;
           user = placeData.result.reviews[i].author_name;
+          // imageUrl = placeData.result.reviews[i].profile_photo_url.split('').splice(2).join('');
+          // userImage = $('<img>').attr('src', imageUrl);
           reviewContainer = $('<p>').addClass('review-text').html(review);
-          userContainer = $('<footer><cite title="Source Title">' + user + '</cite></footer>');
+          userContainer = $('<footer><cite title="Source Title">' +  user + '</cite></footer>');
           blockquote = $('<blockquote>').addClass('blockquote-reverse').append(reviewContainer);
           blockquote.append(userContainer);
-          $('.modal-body').append(blockquote);
+          $('.review-body').append(blockquote);
         }
       });
     });
