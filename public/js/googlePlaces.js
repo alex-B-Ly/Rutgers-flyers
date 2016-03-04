@@ -1,11 +1,10 @@
-$(document).ready(function() {
-
+window.getPlaceData = function(category) {
   //Set Parameters
   var googlePlacesURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
   var apiKey = 'AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg';
   var latLng = '40.4861111,-74.4522222';
-  var radius = 10000;
-  var type = 'restaurant';
+  var radius = 5000;
+  var type = category;
 
   //Build URL
   var apiEndPoint = googlePlacesURL + 'key=' + apiKey + '&location=' + latLng + '&radius=' + radius + '&type=' + type;
@@ -13,7 +12,7 @@ $(document).ready(function() {
   //Ajax call to get restaurant data based on location and radius
   $.getJSON(apiEndPoint, function(data) {
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < data.results.length; i++) {
 
       //Build unique URL for each individual place
       var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
@@ -128,10 +127,10 @@ $(document).ready(function() {
       var placeId = $(this).attr('data-place-id');
       var placeEndPoint = placeURL + placeId;
 
-      var review, user, reviewContainer, userContainer, blockquote, imageUrl, userImage;
+      var reviews, review, user, reviewContainer, userContainer, blockquote, imageUrl, userImage;
       $.getJSON(placeEndPoint, function(placeData) {
-        console.log(placeData);
-        for (var i = 0; i < 2; i++) {
+        reviews = placeData.result.reviews;
+        for (var i = 0; i < reviews.length; i++) {
           review = placeData.result.reviews[i].text;
           user = placeData.result.reviews[i].author_name;
           // imageUrl = placeData.result.reviews[i].profile_photo_url.split('').splice(2).join('');
@@ -187,5 +186,5 @@ $(document).ready(function() {
         }
       });
     });
+}
 
-});
