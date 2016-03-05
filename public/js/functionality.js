@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+  // USER REVIEW AREA TOGGLE
+  
   
   // REGISTER VALIDATION
   function validateRegister(){
