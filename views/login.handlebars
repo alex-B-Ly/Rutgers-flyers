@@ -1,5 +1,9 @@
 <div class="row">
   <div class="col-xs-12">
-    <h1>Rutgers Flyers</h1>
+    {{#if isAuthenticated}}
+    <h3>Congrats! You are now logged in as <em>{{user.id}}</em>. Click <a href="/">here</a> to go to the main page.</h3>
+    {{else}}
+    <h3>Sorry, login failed.</h3>
+    {{/if}}
   </div>
 </div>

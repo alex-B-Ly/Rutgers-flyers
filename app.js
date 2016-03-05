@@ -75,7 +75,10 @@ passport.deserializeUser(function(id, done) {
 
 // ROUTES
 app.get('/', function(req, res) {
-  res.render('home');
+  res.render('home', {
+    user: req.user,
+    isAuthenticated: req.isAuthenticated()
+  });
 });
 
 app.post('/login', passport.authenticate('local', {
