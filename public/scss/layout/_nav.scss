@@ -1,0 +1,26 @@
+.nav-buttons{
+  margin-left: 20px;
+  font-size: 1.2em;
+  background: $secondary-rutgers-color;
+  border-radius: 20px;
+  padding: 5px 10px;
+  transition: all 1.2s;
+}
+
+.nav-buttons:hover{
+  background: lighten($secondary-rutgers-color, 12%);
+  text-shadow: 0 0 5px #fff;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
+  padding: 7px 0;
+}
+
+@media screen and (max-width:767px){
+  .nav-buttons{
+    margin: 5px auto;
+    display: block;
+    border-radius: 0;
+    width: 100%;
+  }
+}
