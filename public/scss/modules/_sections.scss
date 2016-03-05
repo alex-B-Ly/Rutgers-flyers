@@ -25,3 +25,25 @@
 .phone-row {
   margin-bottom: 10px;
 }
+
+.home-link {
+  opacity: 0.5;
+}
+
+.home-link:hover {
+  opacity: 1;
+}
+
+.pic-heading {
+  position: absolute;
+  z-index: 1;
+  top: 25%;
+  left: 35%;
+  color: white;
+  background: rgba(0,0,0,0.35);
+  padding: 10px;
+}
+
+.heading-link:hover ~ a > .home-link {
+  opacity: 1;
+}
