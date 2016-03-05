@@ -1,6 +1,6 @@
 window.getPlaceData = function(category) {
   //Set Parameters
-  var googlePlacesURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
+  var googlePlacesURL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
   var apiKey = 'AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg';
   var latLng = '40.4861111,-74.4522222';
   var radius = 3000;
@@ -9,49 +9,63 @@ window.getPlaceData = function(category) {
   //Build URL
   var apiEndPoint = googlePlacesURL + 'key=' + apiKey + '&location=' + latLng + '&radius=' + radius + '&type=' + type;
 
-  //Ajax call to get restaurant data based on location and radius
-  $.getJSON(apiEndPoint, function(data) {
+  $.ajax({
+    url: apiEndPoint,
+    dataType: 'JSONP',
+    type: 'GET',
+    success: function(data) {
+      for (var i = 0; i < data.results.length; i++) {
 
-    for (var i = 0; i < data.results.length; i++) {
+        //Build unique URL for each individual place
+        var placeURL = 'https://maps.googleapis.com/maps/api/place/details/jsonp?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
+        var placeId = data.results[i].place_id;
+        var placeEndPoint = placeURL + placeId;
+      
+        (function(index) {
+          //Get unique data for each restaurant based on initial API call
 
-      //Build unique URL for each individual place
-      var placeURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg&placeid=';
-      var placeId = data.results[i].place_id;
-      var placeEndPoint = placeURL + placeId;
-    
-      (function(index) {
-        //Get unique data for each restaurant based on initial API call
-        $.getJSON(placeEndPoint, function (placeData) {
-            //Get address data
-            var streetNumber = placeData.result.address_components[0].short_name;
-            var streetName = placeData.result.address_components[1].short_name;
-            var city =  placeData.result.address_components[2].short_name;
-            var state = placeData.result.address_components[3].short_name;
-            var zipCode = placeData.result.address_components[5].short_name;
-            var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode;
+          $.ajax({
+            url: placeEndPoint,
+            dataType: 'JSON',
+            type: 'GET',
+            success: function(placeData) {
+              //Get address data
+              var streetNumber = placeData.result.address_components[0].short_name;
+              var streetName = placeData.result.address_components[1].short_name;
+              var city =  placeData.result.address_components[2].short_name;
+              var state = placeData.result.address_components[3].short_name;
+              var zipCode = placeData.result.address_components[5].short_name;
+              var address = streetNumber + " " + streetName + " " + city + " " + state + " " + zipCode;
 
-            //Get name and open/closed status of each restaurant
-            var restaurant = data.results[index].name;
-            var rating = data.results[index].rating;
-            var status = data.results[index].opening_hours.open_now;
+              //Get name and open/closed status of each restaurant
+              var restaurant = data.results[index].name;
+              var rating = data.results[index].rating;
+              var status = data.results[index].opening_hours.open_now;
 
-            //Get specific id for each restaurant to pass to data-tag
-            var placeDataId = data.results[index].place_id;
+              //Get specific id for each restaurant to pass to data-tag
+              var placeDataId = data.results[index].place_id;
 
-            //Add image 
-            var imageId = data.results[index].photos[0].photo_reference;
-            var imageUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&maxheight=300&photoreference=' + imageId + '&key=' + apiKey;
-            var image = $("<img>").attr('src', imageUrl).addClass('img-thumbnail center-block');
+              //Add image 
+              var imageId = data.results[index].photos[0].photo_reference;
+              var imageUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&maxheight=300&photoreference=' + imageId + '&key=' + apiKey;
+              var image = $("<img>").attr('src', imageUrl).addClass('img-thumbnail center-block');
 
-            //Pass data to buildPanel function to create unique panel for each restaurant
-            buildPanel(address, restaurant, rating, status, image, placeDataId); 
-        });
-      })(i);
+              //Pass data to buildPanel function to create unique panel for each restaurant
+              buildPanel(address, restaurant, rating, status, image, placeDataId); 
+
+            }
+
+          });
+
+        })(i);
 
 
-    } 
+      } 
+
+    }
 
   });
+
 
   //Build Panel w/ Restaurant Data
   function buildPanel(address, restaurant, rating, status, image, placeDataId) {
