@@ -47,3 +47,29 @@
 .heading-link:hover ~ a > .home-link {
   opacity: 1;
 }
+
+// USER REVIEW MODAL
+.user-review-toggle{
+  font-size: 1.6em;
+}
+
+.user-review-area{
+  border-bottom: 1px solid black;
+  display: none;
+}
+
+.review-close{
+  margin-top: 20px;
+}
+
+.user-review-entry{
+  display: block;
+  width: 100%;
+  resize: none;
+  margin: 10px 0;
+  height: 120px;
+}
+
+.review-submit-button{
+  margin-bottom: 15px;
+}
