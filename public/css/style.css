@@ -81,7 +81,7 @@ a:active {
   background: #4c4e4e;
   text-shadow: 0 0 5px #fff; }
 
-.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+.navbar-inverse {
   padding: 7px 0; }
 
 @media screen and (max-width: 767px) {
