@@ -1,7 +1,9 @@
 $(document).ready(function() {
 
   // USER REVIEW AREA TOGGLE
-  
+  $('.user-review-toggle').on('click', function(){
+    $('.user-review-area').slideToggle(500);
+  });
   
   // REGISTER VALIDATION
   function validateRegister(){

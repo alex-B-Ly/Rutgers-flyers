@@ -67,7 +67,8 @@ a:active {
   font-size: 1.6em; }
 
 .user-review-area {
-  border-bottom: 1px solid black; }
+  border-bottom: 1px solid black;
+  display: none; }
 
 .review-close {
   margin-top: 20px; }
