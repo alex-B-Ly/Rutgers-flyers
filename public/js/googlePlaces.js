@@ -3,7 +3,7 @@ window.getPlaceData = function(category) {
   var googlePlacesURL = 'https://crossorigin.me/https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
   var apiKey = 'AIzaSyCoy7UBpNXFlBQKUGDtNz0ZhkgYC2cpPkg';
   var latLng = '40.4861111,-74.4522222';
-  var radius = 2000;
+  var radius = 3000;
   var type = category;
 
   //Build URL
